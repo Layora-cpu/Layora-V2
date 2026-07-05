@@ -1,1 +1,105 @@
+/* ==========================================
+LAYORA V2 DESIGN SYSTEM
+========================================== */
 
+:root{
+
+/* Luxury Brand Colors */
+
+--primary:#B76E79;
+--primary-dark:#9F5B67;
+--secondary:#D4AF37;
+--secondary-light:#E8C86B;
+
+--background:#FFFDFB;
+--surface:#FFFFFF;
+
+--soft-pink:#FDF2F5;
+--light-pink:#F8E8EE;
+
+--text:#2D2D2D;
+--text-light:#6E6E6E;
+
+--border:#ECECEC;
+
+--success:#4CAF50;
+--danger:#E53935;
+
+--white:#FFFFFF;
+--black:#111111;
+
+/* Typography */
+
+--heading-font:"Cormorant Garamond",serif;
+--body-font:"Poppins",sans-serif;
+
+/* Font Sizes */
+
+--fs-xs:12px;
+--fs-sm:14px;
+--fs-md:16px;
+--fs-lg:18px;
+--fs-xl:22px;
+--fs-2xl:32px;
+--fs-3xl:42px;
+--fs-4xl:56px;
+
+/* Font Weight */
+
+--fw-light:300;
+--fw-normal:400;
+--fw-medium:500;
+--fw-semibold:600;
+--fw-bold:700;
+
+/* Border Radius */
+
+--radius-sm:8px;
+--radius-md:14px;
+--radius-lg:20px;
+--radius-xl:30px;
+--radius-round:999px;
+
+/* Shadows */
+
+--shadow-sm:0 4px 12px rgba(0,0,0,.05);
+
+--shadow-md:0 10px 25px rgba(0,0,0,.08);
+
+--shadow-lg:0 20px 50px rgba(0,0,0,.12);
+
+--shadow-gold:0 12px 35px rgba(212,175,55,.25);
+
+/* Transition */
+
+--transition:all .35s ease;
+
+/* Max Width */
+
+--container:1280px;
+
+/* Spacing */
+
+--space-xs:8px;
+--space-sm:16px;
+--space-md:24px;
+--space-lg:40px;
+--space-xl:60px;
+--space-2xl:90px;
+
+/* Gradient */
+
+--gradient-primary:linear-gradient(
+135deg,
+#FDF2F5 0%,
+#FFFDFB 50%,
+#F8E8EE 100%
+);
+
+--gradient-gold:linear-gradient(
+135deg,
+#D4AF37,
+#F2D57A
+);
+
+}
