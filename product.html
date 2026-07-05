@@ -1,1 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Product | Layora Hijabs</title>
+
+<meta name="description" content="Premium Hijabs by Layora">
+
+<link rel="icon" href="photos/logo.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/variables.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/header.css">
+<link rel="stylesheet" href="css/product-page.css">
+<link rel="stylesheet" href="css/buttons.css">
+<link rel="stylesheet" href="css/footer.css">
+<link rel="stylesheet" href="css/animations.css">
+<link rel="stylesheet" href="css/responsive.css">
+
+</head>
+
+<body>
+
+<header>
+
+<div class="logo">
+
+<a href="index.html">
+
+<img src="photos/logo.png" alt="Layora">
+
+</a>
+
+</div>
+
+<nav>
+
+<ul>
+
+<li><a href="index.html">Home</a></li>
+
+<li><a href="collections.html">Collections</a></li>
+
+<li><a href="about.html">About</a></li>
+
+<li><a href="contact.html">Contact</a></li>
+
+<li><a href="loyalty.html">Layora Club</a></li>
+
+</ul>
+
+</nav>
+
+<a
+href="https://wa.me/916364254977"
+class="whatsapp-btn"
+target="_blank">
+
+WhatsApp
+
+</a>
+
+</header>
+
+<section class="product-section">
+
+<div class="container">
+
+<div id="productContainer">
+
+<!-- Product loads from product.js -->
+
+</div>
+
+</div>
+
+</section>
+
+<!-- PRODUCT FEATURES -->
+
+<section class="features-section">
+
+<div class="container">
+
+<div class="why-grid">
+
+<div class="why-card">
+
+<div class="why-icon">🚚</div>
+
+<h3>Fast Delivery</h3>
+
+<p>Safe delivery across India.</p>
+
+</div>
+
+<div class="why-card">
+
+<div class="why-icon">💎</div>
+
+<h3>Premium Quality</h3>
+
+<p>Carefully selected premium fabrics.</p>
+
+</div>
+
+<div class="why-card">
+
+<div class="why-icon">🎁</div>
+
+<h3>Elegant Packaging</h3>
+
+<p>Beautifully packed for every order.</p>
+
+</div>
+
+<div class="why-card">
+
+<div class="why-icon">💬</div>
+
+<h3>WhatsApp Support</h3>
+
+<p>Quick assistance before and after purchase.</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- RELATED PRODUCTS -->
+
+<section class="related-products">
+
+<div class="container">
+
+<div class="section-title">
+
+<h5>YOU MAY ALSO LIKE</h5>
+
+<h2>Related Products</h2>
+
+</div>
+
+<div id="relatedProducts" class="product-grid">
+
+<!-- Loaded by JavaScript -->
+
+</div>
+
+</div>
+
+</section><!-- ===========================================
+ORDER POPUP
+=========================================== -->
+
+<div id="orderModal" class="order-modal">
+
+<div class="order-modal-content">
+
+<button class="close-order" aria-label="Close">
+
+&times;
+
+</button>
+
+<h2>Complete Your Order</h2>
+
+<p>
+
+Fill in your details to continue your order on WhatsApp.
+
+</p>
+
+<form id="orderForm">
+
+<div class="form-grid">
+
+<div class="form-group">
+
+<label>Product</label>
+
+<input
+type="text"
+id="orderProduct"
+readonly>
+
+</div>
+
+<div class="form-group">
+
+<label>Product ID</label>
+
+<input
+type="text"
+id="orderId"
+readonly>
+
+</div>
+
+<div class="form-group">
+
+<label>Price</label>
+
+<input
+type="text"
+id="orderPrice"
+readonly>
+
+</div>
+
+<div class="form-group">
+
+<label>Your Name *</label>
+
+<input
+type="text"
+id="customerName"
+placeholder="Enter your full name"
+required>
+
+</div>
+
+<div class="form-group">
+
+<label>Phone Number *</label>
+
+<input
+type="tel"
+id="customerPhone"
+placeholder="Enter your phone number"
+required>
+
+</div>
+
+<div class="form-group">
+
+<label>Colour</label>
+
+<select id="customerColour">
+
+<option>Black</option>
+<option>White</option>
+<option>Brown</option>
+<option>Beige</option>
+<option>Grey</option>
+<option>Pink</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>Quantity</label>
+
+<div class="quantity-box">
+
+<button
+type="button"
+id="minusQty">
+
+−
+
+</button>
+
+<input
+type="number"
+id="customerQty"
+value="1"
+min="1">
+
+<button
+type="button"
+id="plusQty">
+
++
+
+</button>
+
+</div>
+
+</div>
+
+<div class="form-group full-width">
+
+<label>Address</label>
+
+<textarea
+id="customerAddress"
+rows="3"
+placeholder="House No, Street, Area"></textarea>
+
+</div>
+
+<div class="form-group">
+
+<label>City</label>
+
+<input
+type="text"
+id="customerCity">
+
+</div>
+
+<div class="form-group">
+
+<label>State</label>
+
+<input
+type="text"
+id="customerState">
+
+</div>
+
+<div class="form-group">
+
+<label>Pincode</label>
+
+<input
+type="text"
+id="customerPincode">
+
+</div>
+
+<div class="form-group full-width">
+
+<label>Additional Note</label>
+
+<textarea
+id="customerNote"
+rows="2"
+placeholder="Optional"></textarea>
+
+</div>
+
+</div>
+
+<div class="order-summary">
+
+<h3>Order Summary</h3>
+
+<div class="summary-row">
+
+<span>Total Amount</span>
+
+<strong id="orderTotal">
+
+₹0
+
+</strong>
+
+</div>
+
+</div>
+
+<button
+type="submit"
+class="primary-btn full-btn">
+
+Continue to WhatsApp
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+<!-- Floating WhatsApp -->
+
+<a
+href="https://wa.me/916364254977"
+class="floating-whatsapp"
+target="_blank">
+
+<img
+src="photos/icons/whatsapp.png"
+alt="WhatsApp">
+
+</a>
+
+<!-- Back To Top -->
+
+<button id="backToTop">
+
+↑
+
+</button>
+
+<!-- Scripts -->
+
+<script src="js/products.js"></script>
+<script src="js/product.js"></script>
+<script src="js/script.js"></script>
+<script src="js/animations.js"></script>
+<script src="js/utils.js"></script>
+
+</body>
+
+</html>
