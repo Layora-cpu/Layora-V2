@@ -261,16 +261,15 @@ SAVE TO GOOGLE SHEETS
 
 try{
 
-const response=await fetch(SCRIPT_URL,{
+const formData = new URLSearchParams();
 
-method:"POST",
+Object.keys(orderData).forEach(key => {
+  formData.append(key, orderData[key]);
+});
 
-headers:{
-"Content-Type":"application/json"
-},
-
-body:JSON.stringify(orderData)
-
+const response = await fetch(SCRIPT_URL, {
+  method: "POST",
+  body: formData
 });
 
 if(!response.ok){
