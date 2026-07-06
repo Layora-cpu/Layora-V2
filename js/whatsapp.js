@@ -2,8 +2,7 @@
    LAYORA WHATSAPP SYSTEM
 ========================================== */
 
-const SCRIPT_URL =
-https://script.google.com/macros/s/AKfycby2Sr4hpkl8jp3W4dzK7c4_uiwEBcOTvBoSzGl-CqYpX-Y_paSLlV0mUVZbxOTdH3j44g/exec
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby2Sr4hpkl8jp3W4dzK7c4_uiwEBcOTvBoSzGl-CqYpX-Y_paSLlV0mUVZbxOTdH3j44g/exec";
 const orderForm=document.getElementById("orderForm");
 
 if(orderForm){
