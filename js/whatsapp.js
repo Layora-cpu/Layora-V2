@@ -204,6 +204,35 @@ colour=document.getElementById("otherColour").value.trim();
 }
 
 const total=parseFloat(price.replace(/[^\d.]/g,""))*parseInt(qty);
+const orderData = {
+
+  orderId,
+
+  product,
+
+  productId,
+
+  customer: name,
+
+  phone,
+
+  colour,
+
+  quantity: qty,
+
+  amount: total,
+
+  address,
+
+  city,
+
+  state,
+
+  pincode,
+
+  note
+
+};
 
 const message=
 `🛍️ *NEW LAYORA ORDER*
@@ -265,6 +294,30 @@ button.innerText="Preparing Order...";
 const url=`https://wa.me/916364254977?text=${encodeURIComponent(message)}`;
 
 setTimeout(()=>{
+fetch("https://script.google.com/macros/s/AKfycbz1zBtMzI_g4d8bqBK2XeZvic_8IdsR366e6nuTPmjBMAIRbwh8YPnnNyClnIGobeKwig/exec",{
+
+method:"POST",
+
+body:JSON.stringify(orderData),
+
+headers:{
+
+"Content-Type":"application/json"
+
+}
+
+})
+.then(res=>res.json())
+.then(data=>{
+
+console.log("Order Saved",data);
+
+})
+.catch(err=>{
+
+console.error(err);
+
+});
 
 window.open(url,"_blank");
 
