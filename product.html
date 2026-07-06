@@ -190,67 +190,52 @@ Fill in your details to continue your order on WhatsApp.
 <div class="form-grid">
 
 <div class="form-group">
-
 <label>Product</label>
-
-<input
-type="text"
-id="orderProduct"
-readonly>
-
+<input type="text" id="orderProduct" readonly>
 </div>
 
 <div class="form-group">
-
 <label>Product ID</label>
-
-<input
-type="text"
-id="orderId"
-readonly>
-
+<input type="text" id="orderId" readonly>
 </div>
 
 <div class="form-group">
-
 <label>Price</label>
-
-<input
-type="text"
-id="orderPrice"
-readonly>
-
+<input type="text" id="orderPrice" readonly>
 </div>
 
 <div class="form-group">
-
 <label>Your Name *</label>
-
 <input
 type="text"
 id="customerName"
 placeholder="Enter your full name"
-required>
-
+required
+minlength="3"
+maxlength="60"
+autocomplete="name">
+<small class="error" id="nameError"></small>
 </div>
 
 <div class="form-group">
-
-<label>Phone Number *</label>
-
+<label>Mobile Number *</label>
 <input
 type="tel"
 id="customerPhone"
-placeholder="Enter your phone number"
-required>
-
+placeholder="10-digit mobile number"
+required
+maxlength="10"
+inputmode="numeric"
+autocomplete="tel">
+<small class="error" id="phoneError"></small>
 </div>
 
 <div class="form-group">
+<label>Colour *</label>
 
-<label>Colour</label>
+<select id="customerColour" required>
 
-<select id="customerColour">
+<option value="">Select Colour</option>
 
 <option>Black</option>
 <option>White</option>
@@ -259,13 +244,35 @@ required>
 <option>Grey</option>
 <option>Pink</option>
 
+<option value="Other">
+Other (Type Your Colour)
+</option>
+
 </select>
+
+<small class="error" id="colourError"></small>
+
+</div>
+
+<div
+class="form-group full-width"
+id="otherColourBox"
+style="display:none;">
+
+<label>Other Colour *</label>
+
+<input
+type="text"
+id="otherColour"
+placeholder="Example : Olive Green">
+
+<small class="error" id="otherColourError"></small>
 
 </div>
 
 <div class="form-group">
 
-<label>Quantity</label>
+<label>Quantity *</label>
 
 <div class="quantity-box">
 
@@ -281,7 +288,8 @@ id="minusQty">
 type="number"
 id="customerQty"
 value="1"
-min="1">
+min="1"
+max="20">
 
 <button
 type="button"
@@ -297,42 +305,57 @@ id="plusQty">
 
 <div class="form-group full-width">
 
-<label>Address</label>
+<label>Complete Address *</label>
 
 <textarea
 id="customerAddress"
-rows="3"
-placeholder="House No, Street, Area"></textarea>
+rows="4"
+required
+maxlength="250"
+placeholder="House No, Building, Street, Area"></textarea>
+
+<small class="error" id="addressError"></small>
 
 </div>
 
 <div class="form-group">
 
-<label>City</label>
+<label>City *</label>
 
 <input
 type="text"
-id="customerCity">
+id="customerCity"
+required>
+
+<small class="error" id="cityError"></small>
 
 </div>
 
 <div class="form-group">
 
-<label>State</label>
+<label>State *</label>
 
 <input
 type="text"
-id="customerState">
+id="customerState"
+required>
+
+<small class="error" id="stateError"></small>
 
 </div>
 
 <div class="form-group">
 
-<label>Pincode</label>
+<label>Pincode *</label>
 
 <input
 type="text"
-id="customerPincode">
+id="customerPincode"
+maxlength="6"
+required
+inputmode="numeric">
+
+<small class="error" id="pinError"></small>
 
 </div>
 
@@ -342,10 +365,25 @@ id="customerPincode">
 
 <textarea
 id="customerNote"
-rows="2"
+rows="3"
 placeholder="Optional"></textarea>
 
 </div>
+
+</div>
+
+<div class="terms-box">
+
+<label>
+
+<input
+type="checkbox"
+id="agreeTerms"
+required>
+
+I confirm that all the information provided is accurate. I understand that incorrect information may delay or prevent order processing.
+
+</label>
 
 </div>
 
@@ -369,6 +407,7 @@ placeholder="Optional"></textarea>
 
 <button
 type="submit"
+id="continueOrder"
 class="primary-btn full-btn">
 
 Continue to WhatsApp
@@ -376,7 +415,6 @@ Continue to WhatsApp
 </button>
 
 </form>
-
 </div>
 
 </div>
