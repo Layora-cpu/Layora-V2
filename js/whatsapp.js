@@ -1,16 +1,15 @@
 /* ==========================================
-   LAYORA WHATSAPP ORDER SYSTEM
-   Part 1
+   LAYORA WHATSAPP SYSTEM
 ========================================== */
 
 const SCRIPT_URL =
 "https://script.google.com/macros/s/AKfycbydoykvwMLPnObGKpCyir8fePzUFejN6IHMWTHLfPifkEawUe2G5UzQ8OmnjTvFYurKNg/exec";
 
-const form=document.getElementById("orderForm");
+const orderForm=document.getElementById("orderForm");
 
-if(form){
+if(orderForm){
 
-form.addEventListener("submit",function(e){
+orderForm.addEventListener("submit",async function(e){
 
 e.preventDefault();
 
@@ -18,7 +17,7 @@ clearErrors();
 
 if(validateForm()){
 
-sendWhatsAppOrder();
+await sendWhatsAppOrder();
 
 }
 
@@ -27,37 +26,33 @@ sendWhatsAppOrder();
 }
 
 /* ==========================================
-CLEAR ERRORS
+ERROR FUNCTIONS
 ========================================== */
 
 function clearErrors(){
 
-document.querySelectorAll(".error").forEach(error=>{
+document.querySelectorAll(".error").forEach(function(el){
 
-error.textContent="";
+el.textContent="";
 
 });
 
 }
 
-/* ==========================================
-SHOW ERROR
-========================================== */
-
-function showError(id,message){
+function showError(id,msg){
 
 const el=document.getElementById(id);
 
 if(el){
 
-el.textContent=message;
+el.textContent=msg;
 
 }
 
 }
 
 /* ==========================================
-VALIDATE FORM
+VALIDATE
 ========================================== */
 
 function validateForm(){
@@ -74,35 +69,29 @@ const city=document.getElementById("customerCity").value.trim();
 
 const state=document.getElementById("customerState").value.trim();
 
-const pincode=document.getElementById("customerPincode").value.trim();
+const pin=document.getElementById("customerPincode").value.trim();
 
 const colour=document.getElementById("customerColour").value;
 
-const otherColour=document.getElementById("otherColour")?.value.trim();
+const other=document.getElementById("otherColour");
 
-const agree=document.getElementById("agreeTerms").checked;
+const agree=document.getElementById("agreeTerms");
 
-/* Name */
+if(name.length<3){
 
-if(!/^[A-Za-z.' -]{3,60}$/.test(name)){
-
-showError("nameError","Enter a valid name.");
+showError("nameError","Enter valid name.");
 
 valid=false;
 
 }
-
-/* Mobile */
 
 if(!/^[6-9][0-9]{9}$/.test(phone)){
 
-showError("phoneError","Enter a valid Indian mobile number.");
+showError("phoneError","Enter valid mobile number.");
 
 valid=false;
 
 }
-
-/* Address */
 
 if(address.length<15){
 
@@ -112,8 +101,6 @@ valid=false;
 
 }
 
-/* City */
-
 if(city.length<2){
 
 showError("cityError","Enter city.");
@@ -121,8 +108,6 @@ showError("cityError","Enter city.");
 valid=false;
 
 }
-
-/* State */
 
 if(state.length<2){
 
@@ -132,17 +117,13 @@ valid=false;
 
 }
 
-/* Pincode */
-
-if(!/^[0-9]{6}$/.test(pincode)){
+if(!/^[0-9]{6}$/.test(pin)){
 
 showError("pinError","Enter valid pincode.");
 
 valid=false;
 
 }
-
-/* Colour */
 
 if(colour===""){
 
@@ -152,19 +133,19 @@ valid=false;
 
 }
 
-/* Other Colour */
+if(colour==="Other"){
 
-if(colour==="Other" && otherColour===""){
+if(other.value.trim()===""){
 
-showError("otherColourError","Enter colour.");
+showError("otherColourError","Enter your colour.");
 
 valid=false;
 
 }
 
-/* Terms */
+}
 
-if(!agree){
+if(!agree.checked){
 
 alert("Please accept Terms & Conditions.");
 
@@ -174,7 +155,8 @@ valid=false;
 
 return valid;
 
-}/* ==========================================
+}
+/* ==========================================
 GENERATE ORDER ID
 ========================================== */
 
@@ -182,19 +164,13 @@ function generateOrderId(){
 
 const now=new Date();
 
-const y=now.getFullYear();
-
-const m=String(now.getMonth()+1).padStart(2,"0");
-
-const d=String(now.getDate()).padStart(2,"0");
-
-const h=String(now.getHours()).padStart(2,"0");
-
-const min=String(now.getMinutes()).padStart(2,"0");
-
-const s=String(now.getSeconds()).padStart(2,"0");
-
-return `LAY${y}${m}${d}${h}${min}${s}`;
+return "LAY"+
+now.getFullYear()+
+String(now.getMonth()+1).padStart(2,"0")+
+String(now.getDate()).padStart(2,"0")+
+String(now.getHours()).padStart(2,"0")+
+String(now.getMinutes()).padStart(2,"0")+
+String(now.getSeconds()).padStart(2,"0");
 
 }
 
@@ -208,7 +184,7 @@ const button=document.getElementById("continueOrder");
 
 button.disabled=true;
 
-button.innerText="Preparing Order...";
+button.innerHTML="Preparing Order...";
 
 const orderId=generateOrderId();
 
@@ -216,9 +192,13 @@ const product=document.getElementById("orderProduct").value;
 
 const productId=document.getElementById("orderId").value;
 
-const price=document.getElementById("orderPrice").value;
+const priceText=document.getElementById("orderPrice").value;
 
-const qty=parseInt(document.getElementById("customerQty").value);
+const price=parseFloat(priceText.replace(/[^\d.]/g,""))||0;
+
+const qty=parseInt(document.getElementById("customerQty").value)||1;
+
+const total=price*qty;
 
 const name=document.getElementById("customerName").value.trim();
 
@@ -241,12 +221,6 @@ if(colour==="Other"){
 colour=document.getElementById("otherColour").value.trim();
 
 }
-
-const priceNumber=parseFloat(
-price.replace(/[^\d.]/g,"")
-);
-
-const total=priceNumber*qty;
 
 const crowns=Math.floor(total/400);
 
@@ -280,8 +254,9 @@ pincode,
 
 note
 
-};/* ==========================================
-SAVE ORDER TO GOOGLE SHEETS
+};
+/* ==========================================
+SAVE TO GOOGLE SHEETS
 ========================================== */
 
 try{
@@ -298,13 +273,21 @@ body:JSON.stringify(orderData)
 
 });
 
+if(!response.ok){
+
+throw new Error("Unable to save order.");
+
+}
+
 const result=await response.json();
 
-console.log("Google Sheets:",result);
+console.log(result);
 
 }catch(error){
 
-console.error("Google Sheets Error:",error);
+console.error(error);
+
+alert("Unable to connect to Layora server. Your WhatsApp order will still be prepared.");
 
 }
 
@@ -316,7 +299,7 @@ const message=
 
 `🛍️ *NEW LAYORA ORDER*
 
-━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━
 
 🆔 Order ID : ${orderId}
 
@@ -324,7 +307,7 @@ const message=
 
 📱 Mobile : ${phone}
 
-━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━
 
 🧕 Product : ${product}
 
@@ -334,15 +317,15 @@ const message=
 
 📦 Quantity : ${qty}
 
-💰 Price : ₹${priceNumber}
+💰 Price : ₹${price}
 
 💵 Total : ₹${total}
 
 👑 Crowns Earned : ${crowns}
 
-━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━
 
-🏠 *Delivery Address*
+🏠 DELIVERY ADDRESS
 
 ${address}
 
@@ -352,15 +335,16 @@ ${state}
 
 ${pincode}
 
-━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━
 
-📝 *Additional Note*
+📝 NOTE
 
-${note || "No Note"}
+${note || "No Additional Note"}
 
-━━━━━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━
 
 Thank you for shopping with
+
 *Layora Premium Hijabs* ❤️`;
 
 const whatsappUrl=
@@ -371,123 +355,155 @@ window.open(whatsappUrl,"_blank");
 
 button.disabled=false;
 
-button.innerText="Continue to WhatsApp";/* ==========================================
-   COLOUR SELECTOR
+button.innerHTML="Continue to WhatsApp";
+
+}
+/* ==========================================
+OTHER COLOUR
 ========================================== */
 
-const colourSelect = document.getElementById("customerColour");
-const otherColourBox = document.getElementById("otherColourBox");
+const colourSelect=document.getElementById("customerColour");
 
-if (colourSelect && otherColourBox) {
+const otherColourBox=document.getElementById("otherColourBox");
 
-    colourSelect.addEventListener("change", function () {
+if(colourSelect && otherColourBox){
 
-        if (this.value === "Other") {
+colourSelect.addEventListener("change",function(){
 
-            otherColourBox.style.display = "block";
+if(this.value==="Other"){
 
-        } else {
+otherColourBox.style.display="block";
 
-            otherColourBox.style.display = "none";
+}else{
 
-            const otherInput = document.getElementById("otherColour");
+otherColourBox.style.display="none";
 
-            if (otherInput) otherInput.value = "";
+const otherInput=document.getElementById("otherColour");
 
-        }
+if(otherInput){
 
-    });
+otherInput.value="";
+
+}
+
+}
+
+});
 
 }
 
 /* ==========================================
-   QUANTITY BUTTONS
+QUANTITY BUTTONS
 ========================================== */
 
-const qtyInput = document.getElementById("customerQty");
+const qtyInput=document.getElementById("customerQty");
 
-const minusBtn = document.getElementById("minusQty");
+const minusBtn=document.getElementById("minusQty");
 
-const plusBtn = document.getElementById("plusQty");
+const plusBtn=document.getElementById("plusQty");
 
-function updateOrderTotal() {
+function updateTotal(){
 
-    if (!qtyInput) return;
+if(!qtyInput)return;
 
-    const priceText = document.getElementById("orderPrice").value;
+const priceInput=document.getElementById("orderPrice");
 
-    const price = parseFloat(priceText.replace(/[^\d.]/g, "")) || 0;
+const totalLabel=document.getElementById("orderTotal");
 
-    const qty = parseInt(qtyInput.value) || 1;
+if(!priceInput || !totalLabel)return;
 
-    const total = price * qty;
+const price=parseFloat(
 
-    const totalElement = document.getElementById("orderTotal");
+priceInput.value.replace(/[^\d.]/g,"")
 
-    if (totalElement) {
+)||0;
 
-        totalElement.innerHTML = "₹" + total.toFixed(2);
+const qty=parseInt(qtyInput.value)||1;
 
-    }
+const total=price*qty;
 
-}
-
-if (minusBtn) {
-
-    minusBtn.addEventListener("click", function () {
-
-        let qty = parseInt(qtyInput.value) || 1;
-
-        if (qty > 1) {
-
-            qty--;
-
-            qtyInput.value = qty;
-
-            updateOrderTotal();
-
-        }
-
-    });
+totalLabel.textContent="₹"+total.toFixed(2);
 
 }
 
-if (plusBtn) {
+if(minusBtn){
 
-    plusBtn.addEventListener("click", function () {
+minusBtn.addEventListener("click",function(){
 
-        let qty = parseInt(qtyInput.value) || 1;
+let qty=parseInt(qtyInput.value)||1;
 
-        if (qty < 20) {
+if(qty>1){
 
-            qty++;
+qty--;
 
-            qtyInput.value = qty;
+qtyInput.value=qty;
 
-            updateOrderTotal();
-
-        }
-
-    });
+updateTotal();
 
 }
 
-if (qtyInput) {
-
-    qtyInput.addEventListener("input", function () {
-
-        let qty = parseInt(this.value);
-
-        if (isNaN(qty) || qty < 1) qty = 1;
-
-        if (qty > 20) qty = 20;
-
-        this.value = qty;
-
-        updateOrderTotal();
-
-    });
+});
 
 }
 
-document.addEventListener("DOMContentLoaded", updateOrderTotal);
+if(plusBtn){
+
+plusBtn.addEventListener("click",function(){
+
+let qty=parseInt(qtyInput.value)||1;
+
+if(qty<20){
+
+qty++;
+
+qtyInput.value=qty;
+
+updateTotal();
+
+}
+
+});
+
+}
+
+if(qtyInput){
+
+qtyInput.addEventListener("input",function(){
+
+let qty=parseInt(this.value);
+
+if(isNaN(qty)||qty<1){
+
+qty=1;
+
+}
+
+if(qty>20){
+
+qty=20;
+
+}
+
+this.value=qty;
+
+updateTotal();
+
+});
+
+}
+
+/* ==========================================
+INITIALIZE
+========================================== */
+
+document.addEventListener("DOMContentLoaded",function(){
+
+updateTotal();
+
+if(colourSelect && colourSelect.value==="Other"){
+
+otherColourBox.style.display="block";
+
+}
+
+});
