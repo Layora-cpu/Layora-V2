@@ -294,8 +294,7 @@ button.innerText="Preparing Order...";
 const url=`https://wa.me/916364254977?text=${encodeURIComponent(message)}`;
 
 setTimeout(()=>{
-fetch("https://script.google.com/macros/s/AKfycbz1zBtMzI_g4d8bqBK2XeZvic_8IdsR366e6nuTPmjBMAIRbwh8YPnnNyClnIGobeKwig/exec",{
-
+https://script.google.com/macros/s/AKfycbydoykvwMLPnObGKpCyir8fePzUFejN6IHMWTHLfPifkEawUe2G5UzQ8OmnjTvFYurKNg/exec
 method:"POST",
 
 body:JSON.stringify(orderData),
