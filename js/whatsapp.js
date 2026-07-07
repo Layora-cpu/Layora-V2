@@ -185,21 +185,24 @@ async function saveOrder(orderData){
 
     try{
 
-        const response = await fetch(SCRIPT_URL,{
+       // Submit form using hidden iframe
+orderForm.action = SCRIPT_URL;
 
-            method:"POST",
+document.getElementById("orderProduct").name = "product";
+document.getElementById("orderId").name = "productId";
+document.getElementById("customerName").name = "customer";
+document.getElementById("customerPhone").name = "phone";
+document.getElementById("customerColour").name = "colour";
+document.getElementById("customerQty").name = "quantity";
+document.getElementById("customerAddress").name = "address";
+document.getElementById("customerCity").name = "city";
+document.getElementById("customerState").name = "state";
+document.getElementById("customerPincode").name = "pincode";
+document.getElementById("customerNote").name = "note";
 
-            headers:{
-                "Content-Type":"application/json"
-            },
+orderForm.submit();
 
-            body:JSON.stringify(orderData)
-
-        });
-
-        const result = await response.json();
-
-        return result;
+        return true;
 
     }catch(error){
 
