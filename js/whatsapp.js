@@ -3,23 +3,21 @@
 ========================================== */
 
 const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby2Sr4hpkl8jp3W4dzK7c4_uiwEBcOTvBoSzGl-CqYpX-Y_paSLlV0mUVZbxOTdH3j44g/exec";
-const orderForm=document.getElementById("orderForm");
+const layoraorderForm = document.getElementById("orderForm");
 
-if(orderForm){
+if (layoraorderForm) {
 
-orderForm.addEventListener("submit",async function(e){
+    layoraorderForm.addEventListener("submit", async function(e) {
 
-e.preventDefault();
+        e.preventDefault();
 
-clearErrors();
+        clearErrors();
 
-if(validateForm()){
+        if (validateForm()) {
+            await sendWhatsAppOrder();
+        }
 
-await sendWhatsAppOrder();
-
-}
-
-});
+    });
 
 }
 
