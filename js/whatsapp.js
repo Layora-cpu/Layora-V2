@@ -361,7 +361,7 @@ async function sendWhatsAppOrder(){
 
     const result = await saveOrder(order);
 
-    if(!result.success){
+    if(result !== true){
 
         alert("Unable to save order.");
 
