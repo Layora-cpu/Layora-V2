@@ -185,7 +185,7 @@ Fill in your details to continue your order on WhatsApp.
 
 </p>
 
-<form id="orderForm">
+<form id="orderForm" method="POST" target="hidden_iframe">
 
 <div class="form-grid">
 
@@ -415,6 +415,15 @@ Continue to WhatsApp
 </button>
 
 </form>
+
+<iframe
+    name="hidden_iframe"
+    id="hidden_iframe"
+    style="display:none;">
+</iframe>
+
+</div>
+  
 </div>
 
 </div>
