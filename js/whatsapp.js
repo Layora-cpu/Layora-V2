@@ -77,33 +77,42 @@ function generateOrder(){
 
 async function saveOrder(order) {
 
-    try {
+  return new Promise((resolve) => {
 
-        const response = await fetch(SCRIPT_URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(order)
-        });
+    const form = document.createElement("form");
+    form.method = "POST";
+    form.action = SCRIPT_URL;
+    form.target = "hidden_iframe";
 
-        const result = await response.json();
-
-        return result;
-
-    } catch (error) {
-
-        console.error("Save Order Error:", error);
-
-        return {
-            success: false,
-            error: error.message
-        };
-
+    for (const key in order) {
+      const input = document.createElement("input");
+      input.type = "hidden";
+      input.name = key;
+      input.value = order[key];
+      form.appendChild(input);
     }
 
-}
+    let iframe = document.getElementById("hidden_iframe");
 
+    if (!iframe) {
+      iframe = document.createElement("iframe");
+      iframe.name = "hidden_iframe";
+      iframe.id = "hidden_iframe";
+      iframe.style.display = "none";
+      document.body.appendChild(iframe);
+    }
+
+    document.body.appendChild(form);
+    form.submit();
+
+    setTimeout(() => {
+      document.body.removeChild(form);
+      resolve({ success: true });
+    }, 1500);
+
+  });
+
+}
 /* ==========================================
    CREATE WHATSAPP MESSAGE
 ========================================== */
