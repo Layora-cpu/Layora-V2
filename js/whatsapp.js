@@ -263,10 +263,13 @@ Object.keys(orderData).forEach(key => {
   formData.append(key, orderData[key]);
 });
 
-const response = await fetch(SCRIPT_URL, {
-  method: "POST",
-  body: formData
+alert("Fetch Started");
+
+const response = await fetch(SCRIPT_URL,{
+   ...
 });
+
+alert("Fetch Completed");
 
 if(!response.ok){
 
