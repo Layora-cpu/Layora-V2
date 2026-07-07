@@ -1,21 +1,52 @@
 /* ==========================================
-   LAYORA WHATSAPP SYSTEM
+   LAYORA V2 - WHATSAPP ORDER SYSTEM
 ========================================== */
 
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycby2Sr4hpkl8jp3W4dzK7c4_uiwEBcOTvBoSzGl-CqYpX-Y_paSLlV0mUVZbxOTdH3j44g/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzbkUo0FXEQ0HBqbpIDzt41RECK5fpgmYz-epcK1E2KjPiAfSk6eCqjXNBliIVC-fE9/exec";
 
-const layoraorderForm = document.getElementById("orderForm");
+const WHATSAPP_NUMBER = "916364254977";
 
-if (layoraorderForm) {
+const orderForm = document.getElementById("orderForm");
 
-    layoraorderForm.addEventListener("submit", async function(e) {
+if (!orderForm) {
+    console.error("Order form not found");
+}
 
-        e.preventDefault();
+/* ==========================================
+   HELPERS
+========================================== */
 
-        clearErrors();
+function $(id) {
+    return document.getElementById(id);
+}
 
-        if (validateForm()) {
-            await sendWhatsAppOrder();
+function value(id) {
+    return $(id).value.trim();
+}
+
+function showError(id, msg) {
+    const el = $(id);
+    if (el) el.textContent = msg;
+}
+
+function clearErrors() {
+
+    [
+        "nameError",
+        "phoneError",
+        "colourError",
+        "otherColourError",
+        "addressError",
+        "cityError",
+        "stateError",
+        "pinError"
+
+    ].forEach(id => {
+
+        if ($(id)) {
+
+            $(id).textContent = "";
+
         }
 
     });
@@ -23,419 +54,367 @@ if (layoraorderForm) {
 }
 
 /* ==========================================
-ERROR FUNCTIONS
+   ORDER ID
 ========================================== */
 
-function clearErrors(){
+function generateOrderId() {
 
-document.querySelectorAll(".error").forEach(function(el){
+    const now = new Date();
 
-el.textContent="";
+    return "LAY" +
 
-});
+        now.getFullYear().toString().slice(-2) +
 
-}
+        (now.getMonth() + 1).toString().padStart(2, "0") +
 
-function showError(id,msg){
+        now.getDate().toString().padStart(2, "0") +
 
-const el=document.getElementById(id);
-
-if(el){
-
-el.textContent=msg;
-
-}
+        Math.floor(Math.random() * 9000 + 1000);
 
 }
 
 /* ==========================================
-VALIDATE
+   CROWNS
 ========================================== */
 
-function validateForm(){
+function calculateCrowns(amount) {
 
-let valid=true;
+    amount = Number(amount);
 
-const name=document.getElementById("customerName").value.trim();
+    if (isNaN(amount)) return 0;
 
-const phone=document.getElementById("customerPhone").value.trim();
-
-const address=document.getElementById("customerAddress").value.trim();
-
-const city=document.getElementById("customerCity").value.trim();
-
-const state=document.getElementById("customerState").value.trim();
-
-const pin=document.getElementById("customerPincode").value.trim();
-
-const colour=document.getElementById("customerColour").value;
-
-const other=document.getElementById("otherColour");
-
-const agree=document.getElementById("agreeTerms");
-
-if(name.length<3){
-
-showError("nameError","Enter valid name.");
-
-valid=false;
-
-}
-
-if(!/^[6-9][0-9]{9}$/.test(phone)){
-
-showError("phoneError","Enter valid mobile number.");
-
-valid=false;
-
-}
-
-if(address.length<15){
-
-showError("addressError","Enter complete address.");
-
-valid=false;
-
-}
-
-if(city.length<2){
-
-showError("cityError","Enter city.");
-
-valid=false;
-
-}
-
-if(state.length<2){
-
-showError("stateError","Enter state.");
-
-valid=false;
-
-}
-
-if(!/^[0-9]{6}$/.test(pin)){
-
-showError("pinError","Enter valid pincode.");
-
-valid=false;
-
-}
-
-if(colour===""){
-
-showError("colourError","Select colour.");
-
-valid=false;
-
-}
-
-if(colour==="Other"){
-
-if(other.value.trim()===""){
-
-showError("otherColourError","Enter your colour.");
-
-valid=false;
-
-}
-
-}
-
-if(!agree.checked){
-
-alert("Please accept Terms & Conditions.");
-
-valid=false;
-
-}
-
-return valid;
-
-}
-/* ==========================================
-GENERATE ORDER ID
-========================================== */
-
-function generateOrderId(){
-
-const now=new Date();
-
-return "LAY"+
-now.getFullYear()+
-String(now.getMonth()+1).padStart(2,"0")+
-String(now.getDate()).padStart(2,"0")+
-String(now.getHours()).padStart(2,"0")+
-String(now.getMinutes()).padStart(2,"0")+
-String(now.getSeconds()).padStart(2,"0");
+    return Math.floor(amount / 400);
 
 }
 
 /* ==========================================
-SEND ORDER
+   VALIDATION
+========================================== */
+
+function validateForm() {
+
+    clearErrors();
+
+    let valid = true;
+
+    if (value("customerName").length < 3) {
+
+        showError("nameError", "Enter valid name");
+
+        valid = false;
+
+    }
+
+    if (!/^[6-9]\d{9}$/.test(value("customerPhone"))) {
+
+        showError("phoneError", "Enter valid mobile number");
+
+        valid = false;
+
+    }
+
+    if (!value("customerColour")) {
+
+        showError("colourError", "Select colour");
+
+        valid = false;
+
+    }
+
+    if (
+
+        value("customerColour") === "Other" &&
+
+        value("otherColour") === ""
+
+    ) {
+
+        showError("otherColourError", "Enter colour");
+
+        valid = false;
+
+    }
+
+    if (value("customerAddress").length < 10) {
+
+        showError("addressError", "Enter complete address");
+
+        valid = false;
+
+    }
+
+    if (value("customerCity") === "") {
+
+        showError("cityError", "Enter city");
+
+        valid = false;
+
+    }
+
+    if (value("customerState") === "") {
+
+        showError("stateError", "Enter state");
+
+        valid = false;
+
+    }
+
+    if (!/^\d{6}$/.test(value("customerPincode"))) {
+
+        showError("pinError", "Enter valid pincode");
+
+        valid = false;
+
+    }
+
+    if (!$("agreeTerms").checked) {
+
+        alert("Please accept Terms & Conditions.");
+
+        valid = false;
+
+    }
+
+    return valid;
+
+}/* ==========================================
+   SAVE ORDER TO GOOGLE SHEETS
+========================================== */
+
+async function saveOrder(orderData){
+
+    try{
+
+        const response = await fetch(SCRIPT_URL,{
+
+            method:"POST",
+
+            headers:{
+                "Content-Type":"application/json"
+            },
+
+            body:JSON.stringify(orderData)
+
+        });
+
+        const result = await response.json();
+
+        return result;
+
+    }catch(error){
+
+        console.error(error);
+
+        return{
+
+            success:false,
+
+            error:error.message
+
+        };
+
+    }
+
+}
+
+/* ==========================================
+   CREATE WHATSAPP MESSAGE
+========================================== */
+
+function buildWhatsAppMessage(order){
+
+return `🛍️ *LAYORA PREMIUM HIJABS*
+
+━━━━━━━━━━━━━━━━━━
+
+🆔 Order ID
+${order.orderId}
+
+👤 Customer
+${order.customer}
+
+📞 Mobile
+${order.phone}
+
+━━━━━━━━━━━━━━━━━━
+
+🧕 Product
+${order.product}
+
+🏷️ Product ID
+${order.productId}
+
+🎨 Colour
+${order.colour}
+
+📦 Quantity
+${order.quantity}
+
+💰 Amount
+₹${order.amount}
+
+👑 Crowns Earned
+${order.crowns}
+
+━━━━━━━━━━━━━━━━━━
+
+📍 Delivery Address
+
+${order.address}
+
+${order.city}
+
+${order.state}
+
+${order.pincode}
+
+━━━━━━━━━━━━━━━━━━
+
+📝 Note
+
+${order.note || "No Note"}
+
+━━━━━━━━━━━━━━━━━━
+
+Thank you for shopping with
+
+❤️ *Layora Premium Hijabs*`;
+
+}
+
+/* ==========================================
+   SEND ORDER
 ========================================== */
 
 async function sendWhatsAppOrder(){
 
-const button=document.getElementById("continueOrder");
+    if(!validateForm()){
 
-button.disabled=true;
+        return;
 
-button.innerHTML="Preparing Order...";
+    }
 
-const orderId=generateOrderId();
+    const btn = $("continueOrder");
 
-const product=document.getElementById("orderProduct").value;
+    btn.disabled = true;
 
-const productId=document.getElementById("orderId").value;
+    btn.innerHTML = "Saving Order...";
 
-const priceText=document.getElementById("orderPrice").value;
+    const price = Number(
 
-const price=parseFloat(priceText.replace(/[^\d.]/g,""))||0;
+        $("orderPrice").value.replace(/[^\d]/g,"")
 
-const qty=parseInt(document.getElementById("customerQty").value)||1;
+    );
 
-const total=price*qty;
+    const qty = Number(
 
-const name=document.getElementById("customerName").value.trim();
+        $("customerQty").value
 
-const phone=document.getElementById("customerPhone").value.trim();
+    );
 
-const address=document.getElementById("customerAddress").value.trim();
+    const total = price*qty;
 
-const city=document.getElementById("customerCity").value.trim();
+    const order = {
 
-const state=document.getElementById("customerState").value.trim();
+        orderId:generateOrderId(),
 
-const pincode=document.getElementById("customerPincode").value.trim();
+        product:value("orderProduct"),
 
-const note=document.getElementById("customerNote").value.trim();
+        productId:value("orderId"),
 
-let colour=document.getElementById("customerColour").value;
+        customer:value("customerName"),
 
-if(colour==="Other"){
+        phone:value("customerPhone"),
 
-colour=document.getElementById("otherColour").value.trim();
+        colour:
 
-}
+        value("customerColour")==="Other"
 
-const crowns=Math.floor(total/400);
+        ?
 
-const orderData={
+        value("otherColour")
 
-orderId,
+        :
 
-product,
+        value("customerColour"),
 
-productId,
+        quantity:qty,
 
-customer:name,
+        amount:total,
 
-phone,
+        address:value("customerAddress"),
 
-colour,
+        city:value("customerCity"),
 
-quantity:qty,
+        state:value("customerState"),
 
-amount:total,
+        pincode:value("customerPincode"),
 
-crowns,
+        note:value("customerNote"),
 
-address,
+        crowns:calculateCrowns(total)
 
-city,
+    };
 
-state,
+    const result = await saveOrder(order);
 
-pincode,
+    if(!result.success){
 
-note
+        alert("Unable to save order.");
 
-};
-/* ==========================================
-SAVE TO GOOGLE SHEETS
+        btn.disabled=false;
+
+        btn.innerHTML="Continue to WhatsApp";
+
+        return;
+
+    }
+
+    const message = buildWhatsAppMessage(order);
+
+    const url =
+
+`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+
+    window.open(url,"_blank");
+
+    btn.disabled=false;
+
+    btn.innerHTML="Continue to WhatsApp";
+
+}/* ==========================================
+   QUANTITY
 ========================================== */
-
-try{
-
-const formData = new URLSearchParams();
-
-Object.keys(orderData).forEach(key => {
-  formData.append(key, orderData[key]);
-});
-
-alert("Fetch Started");
-
-const response = await fetch(SCRIPT_URL,{
-   ...
-});
-
-alert("Fetch Completed");
-
-if(!response.ok){
-
-throw new Error("Unable to save order.");
-
-}
-
-const result=await response.json();
-
-console.log(result);
-
-}catch(error){
-
-console.error(error);
-
-alert("Unable to connect to Layora server. Your WhatsApp order will still be prepared.");
-
-}
-
-/* ==========================================
-WHATSAPP MESSAGE
-========================================== */
-
-const message=
-
-`🛍️ *NEW LAYORA ORDER*
-
-━━━━━━━━━━━━━━━━━━━━
-
-🆔 Order ID : ${orderId}
-
-👤 Customer : ${name}
-
-📱 Mobile : ${phone}
-
-━━━━━━━━━━━━━━━━━━━━
-
-🧕 Product : ${product}
-
-🏷️ Product ID : ${productId}
-
-🎨 Colour : ${colour}
-
-📦 Quantity : ${qty}
-
-💰 Price : ₹${price}
-
-💵 Total : ₹${total}
-
-👑 Crowns Earned : ${crowns}
-
-━━━━━━━━━━━━━━━━━━━━
-
-🏠 DELIVERY ADDRESS
-
-${address}
-
-${city}
-
-${state}
-
-${pincode}
-
-━━━━━━━━━━━━━━━━━━━━
-
-📝 NOTE
-
-${note || "No Additional Note"}
-
-━━━━━━━━━━━━━━━━━━━━
-
-Thank you for shopping with
-
-*Layora Premium Hijabs* ❤️`;
-
-const whatsappUrl=
-
-`https://wa.me/916364254977?text=${encodeURIComponent(message)}`;
-
-window.open(whatsappUrl,"_blank");
-
-button.disabled=false;
-
-button.innerHTML="Continue to WhatsApp";
-
-}
-/* ==========================================
-OTHER COLOUR
-========================================== */
-
-const colourSelect=document.getElementById("customerColour");
-
-const otherColourBox=document.getElementById("otherColourBox");
-
-if(colourSelect && otherColourBox){
-
-colourSelect.addEventListener("change",function(){
-
-if(this.value==="Other"){
-
-otherColourBox.style.display="block";
-
-}else{
-
-otherColourBox.style.display="none";
-
-const otherInput=document.getElementById("otherColour");
-
-if(otherInput){
-
-otherInput.value="";
-
-}
-
-}
-
-});
-
-}
-
-/* ==========================================
-QUANTITY BUTTONS
-========================================== */
-
-const qtyInput=document.getElementById("customerQty");
-
-const minusBtn=document.getElementById("minusQty");
-
-const plusBtn=document.getElementById("plusQty");
 
 function updateTotal(){
 
-if(!qtyInput)return;
+    const price = Number(
 
-const priceInput=document.getElementById("orderPrice");
+        $("orderPrice").value.replace(/[^\d]/g,"")
 
-const totalLabel=document.getElementById("orderTotal");
+    );
 
-if(!priceInput || !totalLabel)return;
+    const qty = Number(
 
-const price=parseFloat(
+        $("customerQty").value
 
-priceInput.value.replace(/[^\d.]/g,"")
+    );
 
-)||0;
-
-const qty=parseInt(qtyInput.value)||1;
-
-const total=price*qty;
-
-totalLabel.textContent="₹"+total.toFixed(2);
+    $("orderTotal").textContent="₹"+(price*qty);
 
 }
 
-if(minusBtn){
+if($("minusQty")){
 
-minusBtn.addEventListener("click",function(){
+$("minusQty").addEventListener("click",function(){
 
-let qty=parseInt(qtyInput.value)||1;
+let qty=Number($("customerQty").value);
 
 if(qty>1){
 
 qty--;
 
-qtyInput.value=qty;
+$("customerQty").value=qty;
 
 updateTotal();
 
@@ -445,17 +424,17 @@ updateTotal();
 
 }
 
-if(plusBtn){
+if($("plusQty")){
 
-plusBtn.addEventListener("click",function(){
+$("plusQty").addEventListener("click",function(){
 
-let qty=parseInt(qtyInput.value)||1;
+let qty=Number($("customerQty").value);
 
 if(qty<20){
 
 qty++;
 
-qtyInput.value=qty;
+$("customerQty").value=qty;
 
 updateTotal();
 
@@ -465,44 +444,58 @@ updateTotal();
 
 }
 
-if(qtyInput){
+if($("customerQty")){
 
-qtyInput.addEventListener("input",function(){
-
-let qty=parseInt(this.value);
-
-if(isNaN(qty)||qty<1){
-
-qty=1;
+$("customerQty").addEventListener("input",updateTotal);
 
 }
 
-if(qty>20){
+/* ==========================================
+   OTHER COLOUR
+========================================== */
 
-qty=20;
+if($("customerColour")){
+
+$("customerColour").addEventListener("change",function(){
+
+if(this.value==="Other"){
+
+$("otherColourBox").style.display="block";
+
+}else{
+
+$("otherColourBox").style.display="none";
+
+$("otherColour").value="";
 
 }
-
-this.value=qty;
-
-updateTotal();
 
 });
 
 }
 
 /* ==========================================
-INITIALIZE
+   FORM SUBMIT
+========================================== */
+
+if(orderForm){
+
+orderForm.addEventListener("submit",async function(e){
+
+e.preventDefault();
+
+await sendWhatsAppOrder();
+
+});
+
+}
+
+/* ==========================================
+   INITIALIZE
 ========================================== */
 
 document.addEventListener("DOMContentLoaded",function(){
 
 updateTotal();
-
-if(colourSelect && colourSelect.value==="Other"){
-
-otherColourBox.style.display="block";
-
-}
 
 });
