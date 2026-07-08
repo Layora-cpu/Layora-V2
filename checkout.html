@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Secure Checkout | Layora</title>
+
+<link rel="stylesheet" href="css/variables.css">
+<link rel="stylesheet" href="css/style.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<header class="checkout-header">
+
+<div class="container">
+
+<a href="collections.html" class="back-btn">
+
+← Continue Shopping
+
+</a>
+
+<div class="checkout-logo">
+
+<img src="photos/logo.jpg">
+
+<h2>LAYORA</h2>
+
+</div>
+
+</div>
+
+</header>
+
+<section class="checkout">
+
+<div class="container">
+
+<div class="checkout-progress">
+
+<div class="step active">
+
+🛍
+
+<p>Cart</p>
+
+</div>
+
+<div class="line"></div>
+
+<div class="step active">
+
+👤
+
+<p>Details</p>
+
+</div>
+
+<div class="line"></div>
+
+<div class="step">
+
+💳
+
+<p>Checkout</p>
+
+</div>
+
+</div>
+
+<div class="checkout-grid">
+
+<div class="checkout-left">
+
+<div class="checkout-card">
+
+<h3>
+
+📦 Order Summary
+
+</h3>
+
+<div id="orderSummary">
+
+<!-- Product loads here -->
+
+</div>
+
+</div>
+
+<div class="checkout-card">
+
+<h3>
+
+👤 Customer Details
+
+</h3>
+
+<input
+
+type="text"
+
+id="customerName"
+
+placeholder="Full Name"
+
+required>
+
+<input
+
+type="tel"
+
+id="customerPhone"
+
+placeholder="Mobile Number"
+
+maxlength="10"
+
+required>
+
+<input
+
+type="email"
+
+id="customerEmail"
+
+placeholder="Email (Optional)">
+
+</div>
+
+<div class="checkout-card">
+
+<h3>
+
+📍 Delivery Address
+
+</h3>
+
+<textarea
+
+id="customerAddress"
+
+rows="4"
+
+placeholder="Complete Address"
+
+required>
+
+</textarea>
+
+<input
+
+type="text"
+
+id="customerCity"
+
+placeholder="City">
+
+<input
+
+type="text"
+
+id="customerState"
+
+placeholder="State">
+
+<input
+
+type="number"
+
+id="customerPincode"
+
+placeholder="Pincode">
+
+</div><!-- ==========================================
+LAYORA CLUB
+========================================== -->
+
+<div class="checkout-card">
+
+<h3>👑 Layora Club</h3>
+
+<p>Already a member? Check your Crown balance.</p>
+
+<div class="reward-check">
+
+<input
+type="tel"
+id="rewardPhone"
+placeholder="Enter Mobile Number">
+
+<button
+type="button"
+id="checkRewardsBtn"
+class="secondary-btn">
+
+Check Rewards
+
+</button>
+
+</div>
+
+<div id="rewardResult" class="reward-result">
+
+<p>✨ New customers automatically join Layora Club.</p>
+
+</div>
+
+</div>
+
+<!-- ==========================================
+PRODUCT OPTIONS
+========================================== -->
+
+<div class="checkout-card">
+
+<h3>🎨 Choose Colour</h3>
+
+<select id="selectedColour">
+
+<option value="">Select Colour</option>
+
+<option>Black</option>
+
+<option>White</option>
+
+<option>Beige</option>
+
+<option>Mocha</option>
+
+<option>Olive</option>
+
+<option>Grey</option>
+
+<option>Other</option>
+
+</select>
+
+<input
+type="text"
+id="otherColour"
+placeholder="Enter Colour"
+style="display:none;margin-top:15px;">
+
+</div>
+
+</div>
+
+<!-- ==========================================
+RIGHT SIDE
+========================================== -->
+
+<div class="checkout-right">
+
+<div class="checkout-card">
+
+<h3>💳 Payment</h3>
+
+<label class="payment-option">
+
+<input
+type="radio"
+name="payment"
+value="COD"
+checked>
+
+Cash on Delivery
+
+</label>
+
+<label class="payment-option">
+
+<input
+type="radio"
+name="payment"
+value="ONLINE"
+disabled>
+
+Online Payment
+
+<span class="coming-soon">
+
+Coming Soon
+
+</span>
+
+</label>
+
+</div>
+
+<div class="checkout-card">
+
+<h3>🧾 Order Summary</h3>
+
+<div class="summary-row">
+
+<span>Subtotal</span>
+
+<span id="subtotalPrice">₹0</span>
+
+</div>
+
+<div class="summary-row">
+
+<span>Shipping</span>
+
+<span>FREE</span>
+
+</div>
+
+<div class="summary-row">
+
+<span>Discount</span>
+
+<span id="discountPrice">₹0</span>
+
+</div>
+
+<hr>
+
+<div class="summary-total">
+
+<span>Total</span>
+
+<strong id="finalPrice">
+
+₹0
+
+</strong>
+
+</div>
+
+<div class="earn-crowns">
+
+👑
+
+You'll earn
+
+<strong id="earnCrowns">
+
+0
+
+</strong>
+
+Crowns
+
+</div>
+
+<button
+id="placeOrderBtn"
+class="primary-btn full-width">
+
+Place Order via WhatsApp
+
+</button>
+
+<p class="checkout-note">
+
+🔒 Secure Checkout • No Hidden Charges
+
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section><!-- ==========================================
+SUCCESS POPUP
+========================================== -->
+
+<div id="successPopup" class="success-popup">
+
+<div class="success-card">
+
+<div class="success-icon">
+
+✅
+
+</div>
+
+<h2>
+
+Thank You!
+
+</h2>
+
+<p>
+
+Your order has been placed successfully.
+
+</p>
+
+<h3 id="successOrderId">
+
+LAY000001
+
+</h3>
+
+<div class="reward-earned">
+
+👑 You earned
+
+<strong id="successCrowns">
+
+0
+
+</strong>
+
+Crowns
+
+</div>
+
+<p>
+
+Redirecting to WhatsApp...
+
+</p>
+
+<div class="loading-bar">
+
+<div class="loading-progress"></div>
+
+</div>
+
+<button onclick="window.location='index.html'" class="secondary-btn">
+
+Continue Shopping
+
+</button>
+
+</div>
+
+</div>
+
+<!-- ==========================================
+FOOTER
+========================================== -->
+
+<footer class="checkout-footer">
+
+<div class="container">
+
+<p>
+
+© 2026 Layora Hijabs
+
+</p>
+
+<p>
+
+Elegance in Every Veil
+
+</p>
+
+</div>
+
+</footer>
+
+<script src="js/products.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/whatsapp.js"></script>
+<script src="js/script.js"></script>
+
+<script>
+
+const colour=document.getElementById("selectedColour");
+const other=document.getElementById("otherColour");
+
+if(colour){
+
+colour.addEventListener("change",()=>{
+
+other.style.display=
+
+colour.value==="Other"
+
+?"block"
+
+:"none";
+
+});
+
+}
+
+</script>
+
+</body>
+
+</html>
