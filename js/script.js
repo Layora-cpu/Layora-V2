@@ -280,3 +280,121 @@ window.addEventListener("online",()=>{
 showToast("Back Online");
 
 });
+/* ==========================================
+LAYORA V2
+ADVANCED FEATURES
+========================================== */
+
+// Wishlist (Future Ready)
+
+const wishlist = JSON.parse(localStorage.getItem("layoraWishlist")) || [];
+
+function addToWishlist(id){
+
+if(!wishlist.includes(id)){
+
+wishlist.push(id);
+
+localStorage.setItem("layoraWishlist",JSON.stringify(wishlist));
+
+showToast("Added to Wishlist ❤️");
+
+}else{
+
+showToast("Already in Wishlist");
+
+}
+
+}
+
+// Recently Viewed
+
+function saveRecentProduct(productId){
+
+let recent = JSON.parse(localStorage.getItem("layoraRecent")) || [];
+
+recent = recent.filter(id=>id!==productId);
+
+recent.unshift(productId);
+
+recent = recent.slice(0,10);
+
+localStorage.setItem("layoraRecent",JSON.stringify(recent));
+
+}
+
+// Product Sorting
+
+function sortProducts(type){
+
+const grid=document.querySelector(".product-grid");
+
+if(!grid)return;
+
+const cards=[...grid.children];
+
+cards.sort((a,b)=>{
+
+const pa=Number(a.dataset.price||0);
+
+const pb=Number(b.dataset.price||0);
+
+if(type==="low") return pa-pb;
+
+if(type==="high") return pb-pa;
+
+return 0;
+
+});
+
+cards.forEach(card=>grid.appendChild(card));
+
+}
+
+// Header Active Link
+
+const current=location.pathname.split("/").pop();
+
+document.querySelectorAll("nav a").forEach(link=>{
+
+if(link.getAttribute("href")===current){
+
+link.classList.add("active");
+
+}
+
+});
+
+// Auto Close Mobile Menu
+
+window.addEventListener("resize",()=>{
+
+if(window.innerWidth>768){
+
+mobileMenu?.classList.remove("active");
+
+}
+
+});
+
+// Keyboard Shortcut
+
+document.addEventListener("keydown",(e)=>{
+
+if(e.key==="Escape"){
+
+mobileMenu?.classList.remove("active");
+
+}
+
+});
+
+// Performance
+
+window.addEventListener("pageshow",()=>{
+
+document.body.classList.add("loaded");
+
+});
+
+console.log("Layora V2 Loaded Successfully");
