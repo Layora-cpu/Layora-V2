@@ -893,3 +893,125 @@ font-weight:500;
 letter-spacing:1px;
 
 }
+/* ==========================================
+LAYORA V2 MOBILE RESPONSIVE
+========================================== */
+
+@media (max-width:768px){
+
+.container{
+width:95%;
+}
+
+section{
+padding:55px 0;
+}
+
+.section-title h2{
+font-size:34px;
+}
+
+.section-title p{
+font-size:15px;
+}
+
+.hero{
+display:flex;
+flex-direction:column;
+text-align:center;
+padding:40px 20px;
+}
+
+.hero-content{
+order:2;
+}
+
+.hero-image{
+order:1;
+margin-bottom:30px;
+}
+
+.hero h1{
+font-size:42px;
+line-height:1.2;
+}
+
+.hero p{
+font-size:16px;
+}
+
+.hero-buttons{
+display:flex;
+flex-direction:column;
+gap:15px;
+}
+
+.primary-btn,
+.secondary-btn{
+width:100%;
+}
+
+.product-grid{
+grid-template-columns:repeat(2,1fr);
+gap:15px;
+}
+
+.product-card img{
+height:210px;
+}
+
+.category-grid{
+grid-template-columns:repeat(2,1fr);
+gap:15px;
+}
+
+.category-grid img{
+height:180px;
+}
+
+.loyalty-container,
+.store-grid{
+grid-template-columns:1fr;
+gap:30px;
+}
+
+.loyalty-text h2{
+font-size:36px;
+}
+
+.store-info{
+padding:25px;
+}
+
+.store-image img{
+height:320px;
+}
+
+.footer-grid{
+grid-template-columns:1fr;
+text-align:center;
+}
+
+.footer-logo{
+margin:auto auto 20px;
+}
+
+.floating-whatsapp{
+width:56px;
+height:56px;
+bottom:18px;
+right:18px;
+}
+
+.floating-whatsapp img{
+width:28px;
+}
+
+#backToTop{
+width:48px;
+height:48px;
+bottom:85px;
+right:20px;
+}
+
+}
