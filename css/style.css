@@ -1015,3 +1015,106 @@ right:20px;
 }
 
 }
+/* ===========================
+HEADER MOBILE
+=========================== */
+
+.site-header{
+
+position:sticky;
+top:0;
+z-index:1000;
+
+background:#fff;
+
+box-shadow:0 5px 20px rgba(0,0,0,.08);
+
+}
+
+.header-container{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:15px 0;
+
+}
+
+.logo img{
+
+height:55px;
+
+width:auto;
+
+}
+
+.menu-toggle{
+
+display:none;
+
+font-size:32px;
+
+background:none;
+
+border:none;
+
+cursor:pointer;
+
+}
+
+@media(max-width:768px){
+
+.menu-toggle{
+
+display:block;
+
+}
+
+#mobileMenu{
+
+display:none;
+
+position:absolute;
+
+top:100%;
+
+left:0;
+
+width:100%;
+
+background:white;
+
+box-shadow:0 8px 20px rgba(0,0,0,.1);
+
+}
+
+#mobileMenu.active{
+
+display:block;
+
+}
+
+#mobileMenu ul{
+
+display:flex;
+
+flex-direction:column;
+
+padding:15px;
+
+gap:15px;
+
+list-style:none;
+
+}
+
+.logo img{
+
+height:48px;
+
+}
+
+}
