@@ -1065,56 +1065,63 @@ cursor:pointer;
 
 }
 
-@media(max-width:768px){
+@media (max-width:768px){
 
 .menu-toggle{
-
 display:block;
+}
 
+.header-container{
+flex-wrap:wrap;
 }
 
 #mobileMenu{
-
 display:none;
-
-position:absolute;
-
-top:100%;
-
-left:0;
-
 width:100%;
-
-background:white;
-
-box-shadow:0 8px 20px rgba(0,0,0,.1);
-
+margin-top:15px;
 }
 
 #mobileMenu.active{
-
 display:block;
-
 }
 
 #mobileMenu ul{
-
 display:flex;
-
 flex-direction:column;
-
-padding:15px;
-
 gap:15px;
-
 list-style:none;
+padding:15px 0;
+}
 
+#mobileMenu li{
+width:100%;
+}
+
+#mobileMenu a{
+display:block;
+padding:12px;
 }
 
 .logo img{
-
 height:48px;
+}
 
+}
+@media (min-width:769px){
+
+.menu-toggle{
+display:none;
+}
+
+#mobileMenu{
+display:block !important;
+}
+
+#mobileMenu ul{
+display:flex;
+align-items:center;
+gap:30px;
+list-style:none;
 }
 
 }
