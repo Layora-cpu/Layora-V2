@@ -1097,3 +1097,196 @@ padding:25px;
 }
 
 }
+/* ==========================================
+ANNOUNCEMENT BAR
+========================================== */
+
+.announcement{
+background:linear-gradient(90deg,#d4af37,#b88a44);
+color:#fff;
+text-align:center;
+padding:12px 20px;
+font-size:14px;
+font-weight:500;
+letter-spacing:1px;
+}
+
+/* ==========================================
+LOADER
+========================================== */
+
+#loader{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:#fff;
+display:flex;
+justify-content:center;
+align-items:center;
+z-index:99999;
+transition:.5s;
+}
+
+.loader-content{
+text-align:center;
+}
+
+.loader-content img{
+width:120px;
+margin:auto;
+margin-bottom:20px;
+}
+
+.loader-content h2{
+font-family:'Cormorant Garamond',serif;
+font-size:42px;
+color:#b88a44;
+margin-bottom:10px;
+}
+
+.loader-content p{
+letter-spacing:2px;
+color:#777;
+}
+
+/* ==========================================
+UTILITY
+========================================== */
+
+.center-btn{
+margin-top:45px;
+text-align:center;
+}
+
+.active{
+color:#b88a44;
+font-weight:600;
+}
+
+/* ==========================================
+SMOOTH ANIMATIONS
+========================================== */
+
+.product-card,
+.category-grid a,
+.why-card,
+.store-info{
+transition:.35s ease;
+}
+
+.product-card:hover,
+.category-grid a:hover,
+.why-card:hover{
+transform:translateY(-8px);
+}
+
+.primary-btn,
+.secondary-btn{
+transition:.3s ease;
+}
+
+.primary-btn:hover,
+.secondary-btn:hover{
+transform:translateY(-3px);
+}
+
+/* ==========================================
+MOBILE MENU ANIMATION
+========================================== */
+
+@media(max-width:768px){
+
+.header-container{
+flex-wrap:wrap;
+}
+
+#mobileMenu{
+display:none;
+width:100%;
+animation:fadeMenu .25s ease;
+}
+
+#mobileMenu.active{
+display:block;
+}
+
+#mobileMenu ul{
+display:flex;
+flex-direction:column;
+gap:16px;
+padding:20px 0;
+}
+
+#mobileMenu li{
+width:100%;
+}
+
+#mobileMenu a{
+display:block;
+padding:12px;
+border-radius:12px;
+}
+
+#mobileMenu a:hover{
+background:#f7f3ef;
+}
+
+}
+
+@keyframes fadeMenu{
+
+from{
+opacity:0;
+transform:translateY(-15px);
+}
+
+to{
+opacity:1;
+transform:translateY(0);
+}
+
+}
+
+/* ==========================================
+SCROLLBAR
+========================================== */
+
+::-webkit-scrollbar{
+width:8px;
+}
+
+::-webkit-scrollbar-thumb{
+background:#c7a15b;
+border-radius:20px;
+}
+
+::-webkit-scrollbar-track{
+background:#f5f5f5;
+}
+
+/* ==========================================
+IMAGE EFFECTS
+========================================== */
+
+.hero-image img,
+.store-image img,
+.loyalty-image img{
+transition:.5s;
+}
+
+.hero-image img:hover,
+.store-image img:hover,
+.loyalty-image img:hover{
+transform:scale(1.03);
+}
+
+/* ==========================================
+SELECTION
+========================================== */
+
+::selection{
+background:#d4af37;
+color:white;
+}
