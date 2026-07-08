@@ -131,3 +131,152 @@ behavior:"smooth"
 });
 
 });
+/* ==========================================
+PRODUCT SEARCH
+========================================== */
+
+const searchInput = document.getElementById("searchInput");
+
+if(searchInput){
+
+searchInput.addEventListener("input",function(){
+
+const value=this.value.toLowerCase();
+
+document.querySelectorAll(".product-card").forEach(card=>{
+
+const text=card.innerText.toLowerCase();
+
+card.style.display=text.includes(value)?"block":"none";
+
+});
+
+});
+
+}
+
+/* ==========================================
+CATEGORY FILTER
+========================================== */
+
+document.querySelectorAll("[data-category]").forEach(button=>{
+
+button.addEventListener("click",()=>{
+
+const category=button.dataset.category;
+
+document.querySelectorAll(".product-card").forEach(card=>{
+
+if(category==="all"){
+
+card.style.display="block";
+
+return;
+
+}
+
+card.style.display=
+
+card.dataset.category===category
+
+?"block":"none";
+
+});
+
+});
+
+});
+
+/* ==========================================
+TOAST
+========================================== */
+
+function showToast(message){
+
+let toast=document.createElement("div");
+
+toast.className="toast";
+
+toast.innerText=message;
+
+document.body.appendChild(toast);
+
+setTimeout(()=>{
+
+toast.classList.add("show");
+
+},50);
+
+setTimeout(()=>{
+
+toast.classList.remove("show");
+
+setTimeout(()=>{
+
+toast.remove();
+
+},300);
+
+},2500);
+
+}
+
+/* ==========================================
+BUTTON LOADING
+========================================== */
+
+function loadingButton(button,text="Loading..."){
+
+button.dataset.original=button.innerHTML;
+
+button.disabled=true;
+
+button.innerHTML=text;
+
+}
+
+function resetButton(button){
+
+button.disabled=false;
+
+button.innerHTML=button.dataset.original;
+
+}
+
+/* ==========================================
+FORMAT PRICE
+========================================== */
+
+function formatPrice(price){
+
+return "₹"+Number(price).toLocaleString("en-IN");
+
+}
+
+/* ==========================================
+COPY TEXT
+========================================== */
+
+function copyText(text){
+
+navigator.clipboard.writeText(text);
+
+showToast("Copied");
+
+}
+
+/* ==========================================
+NETWORK STATUS
+========================================== */
+
+window.addEventListener("offline",()=>{
+
+showToast("No Internet Connection");
+
+});
+
+window.addEventListener("online",()=>{
+
+showToast("Back Online");
+
+});
