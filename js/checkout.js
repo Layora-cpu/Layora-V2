@@ -1,4 +1,4 @@
-const API_URL = "YOUR_GOOGLE_APPS_SCRIPT_WEBAPP_URL";
+const API_URL = "https://script.google.com/macros/s/AKfycbzbkUo0FXEQ0HBqbpIDzt41RECK5fpgmYz-epcK1E2KjPiAfSk6eCqjXNBliIVC-fE9/exec";
 
 document.getElementById("placeOrderBtn").addEventListener("click", placeOrder);
 
