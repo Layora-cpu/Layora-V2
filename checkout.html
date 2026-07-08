@@ -83,22 +83,43 @@
 
 <div class="checkout-card">
 
-<h3>
+<h3>📦 Order Summary</h3>
 
-📦 Order Summary
+<div id="orderSummary"></div>
 
-</h3>
+<div class="qty-box">
 
-<div id="orderSummary">
+<button id="qtyMinus">−</button>
 
-<!-- Product loads here -->
+<span id="qtyValue">1</span>
+
+<button id="qtyPlus">+</button>
 
 </div>
 
 </div>
-
 <div class="checkout-card">
 
+<h3>🎁 Coupon</h3>
+
+<div class="coupon-box">
+
+<input
+type="text"
+id="couponCode"
+placeholder="Enter Coupon">
+
+<button
+id="applyCoupon"
+type="button">
+
+Apply
+
+</button>
+
+</div>
+
+</div>
 <h3>
 
 👤 Customer Details
@@ -261,6 +282,58 @@ RIGHT SIDE
 
 <div class="checkout-right">
 
+<!-- 👑 Crown Reward Card -->
+<div class="checkout-card crown-card">
+
+<h3>👑 Layora Rewards</h3>
+
+<div class="reward-preview">
+
+<p>
+This purchase earns
+<strong id="earnCrowns">0</strong>
+Crowns
+</p>
+
+<p>
+Collect more crowns to unlock exclusive discounts.
+</p>
+
+<div class="reward-progress">
+
+<div class="reward-progress-bar">
+
+<div id="rewardProgressFill"></div>
+
+</div>
+
+<p id="rewardProgressText">
+
+0 / 50 Crowns to Gold Membership
+
+</p>
+
+</div>
+
+<div class="reward-benefits">
+
+<h4>Benefits</h4>
+
+<ul>
+
+<li>👑 Earn 1 Crown for every ₹200 spent</li>
+
+<li>🎁 Redeem Crowns for discounts</li>
+
+<li>🚚 Early access to new collections</li>
+
+<li>✨ Exclusive Layora Club offers</li>
+
+</ul>
+
+</div>
+
+<!-- Payment Card -->
 <div class="checkout-card">
 
 <h3>💳 Payment</h3>
